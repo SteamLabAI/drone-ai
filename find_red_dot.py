@@ -22,6 +22,6 @@ for i in range(10):
     mask_red = cv2.blur(mask_red, (10, 10))
 
     # Discard values lower than 125
-    _, threshed = cv2.threshold(mask, 125, 255, cv2.THRESH_BINARY)
+    _, threshed = cv2.threshold(mask_red, 125, 255, cv2.THRESH_BINARY)
 
     cv2.imwrite("kropki" + str(i) + ".jpg", threshed)
