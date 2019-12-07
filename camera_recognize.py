@@ -1,6 +1,9 @@
 import numpy as np
 import cv2
 
+f = open('params.txt', 'r')
+params = list(map(int, f.read().split()))
+
 cap = cv2.VideoCapture(1)
 
 while True:
@@ -12,13 +15,13 @@ while True:
 
     mask_red_purple = cv2.inRange(  # For hue values (170, 180)
         img,
-        np.array([177, 225, 125]),
-        np.array([180, 255, 255])
+        np.array([177, params[0], params[2]]),
+        np.array([180, params[1], params[3]])
     )
     mask_red_orange = cv2.inRange(  # For hue values (0, 10)
         img,
-        np.array([0, 225, 125]),
-        np.array([17, 255, 255])
+        np.array([0, params[0], params[2]]),
+        np.array([17, params[1], params[3]])
     )
 
     mask_red = mask_red_orange + mask_red_purple
