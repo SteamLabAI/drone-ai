@@ -15,9 +15,10 @@ max_params = [0, 255, 0, 255]
 ret, frame = cap.read()
 img = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 cap.release()
+print('Photo done.')
 
 for value_lower in range(value_min, value_max + 1, step):
-    print(str(value_lower) + "/" + str(value_max))
+    print(str(value_lower) + '/' + str(value_max))
     for value_upper in range(value_lower, value_max + 1, step):
         for saturation_lower in range(saturation_min, saturation_max + 1, step):
             for saturation_upper in range(saturation_lower, saturation_max + 1, step):

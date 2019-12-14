@@ -1,36 +1,17 @@
-import numpy as np
 import cv2
 
-f = open('params.txt', 'r')
-params = list(map(int, f.read().split()))
+from util import Recognizer
 
 cap = cv2.VideoCapture(1)
+
+rec = Recognizer()
 
 while True:
     ret, frame = cap.read()
 
     cv2.imshow('Obraz', frame)
 
-    img = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-
-    mask_red_purple = cv2.inRange(  # For hue values (170, 180)
-        img,
-        np.array([177, params[0], params[2]]),
-        np.array([180, params[1], params[3]])
-    )
-    mask_red_orange = cv2.inRange(  # For hue values (0, 10)
-        img,
-        np.array([0, params[0], params[2]]),
-        np.array([17, params[1], params[3]])
-    )
-
-    mask_red = mask_red_orange + mask_red_purple
-
-    # Blur the mask to ignore image noise and imperfections
-    mask_red = cv2.blur(mask_red, (25, 25))
-
-    # Discard values lower than 125
-    _, threshed = cv2.threshold(mask_red, 125, 255, cv2.THRESH_BINARY)
+    threshed = rec.recognize_frame(frame)
 
     cv2.imshow('Rozpoznanie', threshed)
     if cv2.waitKey(1) & 0xFF == ord('q'):
